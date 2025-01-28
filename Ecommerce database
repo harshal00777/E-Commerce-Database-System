@@ -113,3 +113,25 @@ BEGIN
     END
 END;
 GO
+-- Analytical Query: Top Selling Products in India
+SELECT TOP 5 p.ProductName, SUM(od.Quantity) AS TotalSold
+FROM OrderDetails od
+JOIN Products p ON od.ProductID = p.ProductID
+GROUP BY p.ProductName
+ORDER BY TotalSold DESC;
+
+-- Analytical Query: Customer Lifetime Value (CLV) for Indian Customers
+SELECT c.CustomerID, c.FirstName, c.LastName, SUM(o.TotalAmount) AS LifetimeValue
+FROM Customers c
+JOIN Orders o ON c.CustomerID = o.CustomerID
+GROUP BY c.CustomerID, c.FirstName, c.LastName
+ORDER BY LifetimeValue DESC;
+
+-- Analytical Query: Most Popular Product Categories in India
+SELECT p.Category, SUM(od.Quantity) AS TotalSold
+FROM OrderDetails od
+JOIN Products p ON od.ProductID = p.ProductID
+GROUP BY p.Category
+ORDER BY TotalSold DESC;
+
+
